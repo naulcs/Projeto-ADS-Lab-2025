@@ -1,0 +1,58 @@
+DOCUMENTAÇÃO DA API - RESTAURANTE
+
+PRATOS
+POST /pratos : Cria um novo prato.
+{
+  "nome": "string",
+  "descricao": "string",
+  "preco": "float"
+}
+O nome deve ter entre 3 e 50 caracteres e conter apenas letras e espaços.
+O preço deve ser um número maior que zero.
+GET /pratos : Lista todos os pratos cadastrados.
+GET /pratos/:id : Busca um único prato pelo seu ID.
+O :id na URL deve ser substituído pelo ID numérico do prato.
+PUT /pratos/:id : Atualiza um prato existente.
+{
+  "nome": "string",
+  "descricao": "string",
+  "preco": "float"
+}
+O :id na URL deve ser substituído pelo ID numérico do prato.
+Os campos no corpo da requisição são opcionais; apenas os campos enviados serão atualizados.
+DELETE /pratos/:id : Apaga um prato do banco de dados.
+O :id na URL deve ser substituído pelo ID numérico do prato.
+
+CLIENTES
+POST/clientes : Cria um novo cliente.
+{
+  "nome": "string",
+  "cpf": "string"
+}
+O CPF deve ser um número válido (ex: "123.456.789-00"). A API valida o formato e a veracidade.
+GET /clientes : Lista todos os clientes cadastrados.
+GET /clientes/:id : Busca um único cliente pelo seu ID.
+O :id na URL deve ser substituído pelo ID numérico do cliente.
+PUT /clientes/:id : Atualiza um cliente existente.
+{
+  "nome": "string",
+  "cpf": "string"
+}
+O :id na URL deve ser substituído pelo ID numérico do cliente.
+Os campos no corpo da requisição são opcionais.
+DELETE /clientes/:id : Apaga um cliente do banco de dados.
+O :id na URL deve ser substituído pelo ID numérico do cliente.
+
+PEDIDOS
+POST /pedidos : Cria um novo pedido.
+{
+  "cliente_id": "integer",
+  "prato_ids": ["array de integers"]
+}
+cliente_id é o ID de um cliente existente.prato_ids é uma lista com os IDs de um ou mais pratos existentes.GET /pedidos : Lista todos os pedidos já feitos.
+A resposta inclui os dados completos do cliente e dos pratos associados.
+
+RELATÓRIOS
+GET /relatorios/pratos-populares : Lista os pratos ordenados pela quantidade de vezes que foram pedidos.
+GET /relatorios/clientes-mais-pedidos : Lista os 5 clientes que mais fizeram pedidos.
+GET /relatorios/clientes-maior-gasto : Lista os 5 clientes que mais gastaram no total.

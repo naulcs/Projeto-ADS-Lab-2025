@@ -1,5 +1,3 @@
-const { Sequelize } = require('sequelize');
-
 module.exports = {
   dialect: 'sqlite',
   storage: './restaurante.sqlite', 

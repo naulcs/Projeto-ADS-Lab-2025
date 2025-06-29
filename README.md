@@ -1,4 +1,3 @@
-Com certeza\! Aqui está o conteúdo do ficheiro `README.md` em formato raw Markdown, pronto para copiar e colar.
 
 ````markdown
 # API de Gestão para Restaurante

@@ -1,0 +1,8 @@
+node_modules
+
+npm-debug.log
+
+restaurante.sqlite
+
+.DS_Store
+.vscode/

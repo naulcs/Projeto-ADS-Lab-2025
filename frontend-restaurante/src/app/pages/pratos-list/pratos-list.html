@@ -1,0 +1,37 @@
+<div class="card">
+  <p-table [value]="pratos" [tableStyle]="{'min-width': '60rem'}">
+      <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+              Lista de Pratos
+              <p-button icon="pi pi-plus" label="Novo Prato" (click)="abrirDialogNovoPrato()"></p-button>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr><th>Nome</th><th>Descrição</th><th style="width:10rem">Preço</th></tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-prato>
+          <tr><td>{{prato.nome}}</td><td>{{prato.descricao}}</td><td>{{prato.preco | currency:'BRL'}}</td></tr>
+      </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Novo Prato" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+  <form [formGroup]="pratoForm">
+      <div class="field">
+          <label for="nome">Nome</label>
+          <input type="text" pInputText formControlName="nome" class="w-full" />
+      </div>
+      <div class="field">
+          <label for="descricao">Descrição</label>
+          <textarea rows="3" pInputTextarea formControlName="descricao" class="w-full"></textarea>
+      </div>
+      <div class="field">
+          <label for="preco">Preço</label>
+          <p-inputNumber formControlName="preco" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+      </div>
+  </form>
+  <ng-template pTemplate="footer">
+      <p-button label="Cancelar" icon="pi pi-times" (click)="displayDialog=false" styleClass="p-button-text"></p-button>
+      <p-button label="Salvar" icon="pi pi-check" (click)="salvarPrato()" [disabled]="pratoForm.invalid"></p-button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,33 @@
+<div class="card">
+    <p-table [value]="clientes" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                Lista de Clientes
+                <p-button icon="pi pi-plus" label="Novo Cliente" (click)="abrirDialogNovoCliente()"></p-button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr><th>Nome</th><th>CPF</th></tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cliente>
+            <tr><td>{{cliente.nome}}</td><td>{{cliente.cpf}}</td></tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Novo Cliente" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+    <form [formGroup]="clienteForm">
+        <div class="field">
+            <label for="nome">Nome</label>
+            <input type="text" pInputText formControlName="nome" class="w-full" />
+        </div>
+        <div class="field">
+            <label for="cpf">CPF</label>
+            <input type="text" pInputText formControlName="cpf" class="w-full" />
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <p-button label="Cancelar" icon="pi pi-times" (click)="displayDialog=false" styleClass="p-button-text"></p-button>
+        <p-button label="Salvar" icon="pi pi-check" (click)="salvarCliente()" [disabled]="clienteForm.invalid"></p-button>
+    </ng-template>
+</p-dialog>

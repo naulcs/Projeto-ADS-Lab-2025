@@ -1,19 +1,2 @@
-<!-- src/app/app.html -->
-
-<h1>Cardápio do Restaurante</h1>
-
-<div *ngIf="pratos.length > 0; else semPratos">
-  <ul>
-    <!-- O *ngFor cria um <li> para cada 'prato' na lista 'pratos' -->
-    <li *ngFor="let prato of pratos">
-      <strong>{{ prato.nome }}</strong> - R$ {{ prato.preco }}
-    </li>
-  </ul>
-</div>
-
-<!-- Este bloco é mostrado se a lista de pratos estiver vazia -->
-<ng-template #semPratos>
-  <p>A carregar pratos ou nenhum prato encontrado...</p>
-</ng-template>
-
+<p-menubar [model]="items"></p-menubar>
 <router-outlet></router-outlet>

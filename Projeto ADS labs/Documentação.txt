@@ -56,3 +56,6 @@ RELATÓRIOS
 GET /relatorios/pratos-populares : Lista os pratos ordenados pela quantidade de vezes que foram pedidos.
 GET /relatorios/clientes-mais-pedidos : Lista os 5 clientes que mais fizeram pedidos.
 GET /relatorios/clientes-maior-gasto : Lista os 5 clientes que mais gastaram no total.
+
+Docker 
+docker run --rm -p 3000:3000 --name container-api-restaurante api-restaurante

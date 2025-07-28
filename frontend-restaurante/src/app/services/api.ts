@@ -22,6 +22,7 @@ export class ApiService {
   updateCliente = (id: number, data: Partial<Cliente>): Observable<Cliente> => this.http.put<Cliente>(`${this.apiUrl}/clientes/${id}`, data);
   deleteCliente = (id: number): Observable<void> => this.http.delete<void>(`${this.apiUrl}/clientes/${id}`);
 
+  getPedidos = (): Observable<Pedido[]> => this.http.get<Pedido[]>(`${this.apiUrl}/pedidos`);
   createPedido = (data: PedidoCreate): Observable<Pedido> => this.http.post<Pedido>(`${this.apiUrl}/pedidos`, data);
 
   getPratosPopulares = (): Observable<PratoPopular[]> => this.http.get<PratoPopular[]>(`${this.apiUrl}/relatorios/pratos-populares`);

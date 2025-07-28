@@ -16,7 +16,15 @@ export class AppComponent implements OnInit {
     this.items = [
       { label: 'Cardápio', icon: 'pi pi-fw pi-book', routerLink: ['/pratos'] },
       { label: 'Clientes', icon: 'pi pi-fw pi-users', routerLink: ['/clientes'] },
-      { label: 'Novo Pedido', icon: 'pi pi-fw pi-plus', routerLink: ['/pedidos/novo'] },
+      { 
+        label: 'Pedidos', 
+        icon: 'pi pi-fw pi-shopping-cart',
+        items: [
+          { label: 'Listar Pedidos', icon: 'pi pi-fw pi-list', routerLink: ['/pedidos'] },
+          { label: 'Novo Pedido', icon: 'pi pi-fw pi-plus', routerLink: ['/pedidos/novo'] }
+        ]
+      },
+      // ADICIONE O NOVO ITEM DE MENU AQUI
       { label: 'Relatórios', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/relatorios'] },
     ];
   }

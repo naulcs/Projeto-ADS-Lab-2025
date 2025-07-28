@@ -1,0 +1,38 @@
+<div class="p-d-flex p-jc-center p-ai-center" style="margin-top: 2em;">
+  <p-card header="Criar Novo Pedido" [style]="{width: '40rem'}">
+    <form [formGroup]="pedidoForm" (ngSubmit)="salvarPedido()">
+      
+      <!-- Campo para selecionar o Cliente (substituído por <select>) -->
+      <div class="field">
+        <label for="cliente">Cliente</label>
+        <select formControlName="cliente_id" class="p-inputtext w-full">
+          <option [ngValue]="null" disabled>Selecione um cliente</option>
+          <option *ngFor="let cliente of clientes" [value]="cliente.id">
+            {{ cliente.nome }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Campo para selecionar os Pratos (substituído por <select multiple>) -->
+      <div class="field">
+        <label for="pratos">Pratos</label>
+        <select formControlName="prato_ids" multiple class="p-inputtext w-full" style="height: 150px;">
+          <option *ngFor="let prato of pratos" [value]="prato.id">
+            {{ prato.nome }}
+          </option>
+        </select>
+        <small>Segure a tecla Ctrl (ou Cmd no Mac) para selecionar vários pratos.</small>
+      </div>
+
+      <!-- Botão de submissão -->
+      <div class="p-d-flex p-jc-end">
+        <p-button 
+          label="Salvar Pedido" 
+          type="submit" 
+          icon="pi pi-check">
+        </p-button>
+      </div>
+
+    </form>
+  </p-card>
+</div>

@@ -6,23 +6,29 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 import { ApiService } from '../../services/api';
 import { Prato } from '../../models/prato.model';
 
 @Component({
   selector: 'app-pratos-list',
   standalone: true,
-  imports: [ CommonModule, ReactiveFormsModule, TableModule, DialogModule, ButtonModule, InputTextModule, InputNumberModule, InputTextareaModule ],
+  imports: [ CommonModule, ReactiveFormsModule, TableModule, DialogModule, ButtonModule, InputTextModule, InputNumberModule, ConfirmDialogModule ],
   templateUrl: './pratos-list.html',
-  styleUrls: ['./pratos-list.scss']
+  providers: [ConfirmationService]
 })
 export class PratosListComponent implements OnInit {
   pratos: Prato[] = [];
   pratoForm: FormGroup;
   displayDialog: boolean = false;
+  pratoSelecionado: Prato | null = null;
 
-  constructor(private apiService: ApiService, private fb: FormBuilder) {
+  constructor(
+    private apiService: ApiService,
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService
+  ) {
     this.pratoForm = this.fb.group({
       nome: ['', Validators.required],
       descricao: ['', Validators.required],
@@ -32,13 +38,55 @@ export class PratosListComponent implements OnInit {
 
   ngOnInit(): void { this.carregarPratos(); }
   carregarPratos(): void { this.apiService.getPratos().subscribe(dados => this.pratos = dados); }
-  abrirDialogNovoPrato() { this.pratoForm.reset(); this.displayDialog = true; }
+
+  abrirDialogNovoPrato() {
+    this.pratoSelecionado = null;
+    this.pratoForm.reset();
+    this.displayDialog = true;
+  }
+
+  abrirDialogEditarPrato(prato: Prato) {
+    this.pratoSelecionado = prato;
+    this.pratoForm.patchValue(prato);
+    this.displayDialog = true;
+  }
+
   salvarPrato() {
-    if (this.pratoForm.valid) {
+    if (this.pratoForm.invalid) { return; }
+
+    if (this.pratoSelecionado) {
+      this.apiService.updatePrato(this.pratoSelecionado.id, this.pratoForm.value).subscribe({
+        next: (pratoAtualizado) => {
+          const index = this.pratos.findIndex(p => p.id === pratoAtualizado.id);
+          this.pratos[index] = pratoAtualizado;
+          this.displayDialog = false;
+        },
+        error: (err: any) => alert('Erro ao atualizar prato: ' + err.error.error)
+      });
+    } else {
       this.apiService.createPrato(this.pratoForm.value).subscribe({
-        next: (novoPrato) => { this.pratos = [...this.pratos, novoPrato]; this.displayDialog = false; },
-        error: (err) => console.error('Erro ao criar prato', err)
+        next: (novoPrato) => {
+          this.pratos = [...this.pratos, novoPrato];
+          this.displayDialog = false;
+        },
+        error: (err: any) => alert('Erro ao criar prato: ' + err.error.error)
       });
     }
+  }
+
+  excluirPrato(prato: Prato) {
+    this.confirmationService.confirm({
+        message: `Tem certeza que deseja excluir o prato "${prato.nome}"?`,
+        header: 'Confirmação de Exclusão',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.apiService.deletePrato(prato.id).subscribe({
+                next: () => {
+                    this.pratos = this.pratos.filter(p => p.id !== prato.id);
+                },
+                error: (err: any) => alert('Erro ao excluir prato: ' + err.error.error)
+            });
+        }
+    });
   }
 }

@@ -9,7 +9,6 @@ import { MenuItem } from 'primeng/api';
   standalone: true,
   imports: [CommonModule, RouterOutlet, MenubarModule],
   templateUrl: './app.html',
-  styleUrls: ['./app.scss']
 })
 export class AppComponent implements OnInit {
   items: MenuItem[] = [];
@@ -17,6 +16,8 @@ export class AppComponent implements OnInit {
     this.items = [
       { label: 'Cardápio', icon: 'pi pi-fw pi-book', routerLink: ['/pratos'] },
       { label: 'Clientes', icon: 'pi pi-fw pi-users', routerLink: ['/clientes'] },
+      { label: 'Novo Pedido', icon: 'pi pi-fw pi-plus', routerLink: ['/pedidos/novo'] },
+      { label: 'Relatórios', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/relatorios'] },
     ];
   }
 }

@@ -1,0 +1,37 @@
+<div class="grid" style="margin: 1em;">
+    <!-- Relatório de Pratos Populares -->
+    <div class="col-12 md:col-6 lg:col-4">
+        <p-card header="Pratos Mais Populares">
+            <p-table [value]="pratosPopulares">
+                <ng-template pTemplate="header"><tr><th>Prato</th><th>Nº de Pedidos</th></tr></ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr><td>{{item.nome}}</td><td>{{item.quantidade_pedidos}}</td></tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </div>
+
+    <!-- Relatório de Clientes por Pedidos -->
+    <div class="col-12 md:col-6 lg:col-4">
+        <p-card header="Top 5 Clientes (Mais Pedidos)">
+            <p-table [value]="clientesMaisPedidos">
+                <ng-template pTemplate="header"><tr><th>Cliente</th><th>Total de Pedidos</th></tr></ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr><td>{{item.nome}}</td><td>{{item.total_pedidos}}</td></tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </div>
+
+    <!-- Relatório de Clientes por Gasto -->
+    <div class="col-12 md:col-6 lg:col-4">
+        <p-card header="Top 5 Clientes (Maior Gasto)">
+            <p-table [value]="clientesMaiorGasto">
+                <ng-template pTemplate="header"><tr><th>Cliente</th><th>Total Gasto</th></tr></ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr><td>{{item.nome}}</td><td>{{item.total_gasto | currency:'BRL'}}</td></tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </div>
+</div>
